@@ -18,7 +18,9 @@ namespace kutuphane.Controllers
         }
         public IActionResult Index(KitaplikModel kitap)
         {
-
+            var kitaplist = _context.Kitapliklar.Where(k => k.Durum == true).ToList();
+            ViewBag.kitapL = new SelectList(kitaplist, "Kitap", "Kitap");
+            return View();
             var kitaplist = _context.Kitapliklar.Where(k => k.Durum == true).ToList();
             ViewBag.kitapL = new SelectList(kitaplist, "Kitap","Kitap");
             return View();
