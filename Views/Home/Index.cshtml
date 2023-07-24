@@ -1,4 +1,4 @@
-﻿@model List<KitaplikModel>
+﻿@model List<BookModel>
 @{
     ViewData["Title"] = "index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <div class="d-grid">
-        <a asp-action="KitapEkle" asp-controller="Home" class="btn btn-primary mb-3">Kitap Ekle</a>
+        <a asp-action="AddBook" asp-controller="Book" class="btn btn-primary mb-3">Kitap Ekle</a>
     </div>
     <table class="table table-bordered">
         <tr>
@@ -17,17 +17,20 @@
         </tr>
         @if (Model != null && Model.Any())
         {
-            @foreach (var kitap in Model)
+            @foreach (var book in Model)
             {
                 <tr>
-                    <td>@kitap.Id</td>
-                    @if (kitap.Durum == true){<td>Mevcut</td>}
+                    <td>@book.BookId</td>
+                    @if (book.Status == true)
+                    {
+                        <td>Mevcut</td>
+                    }
                     else{<td>Dışarıda</td>}
-                    <td>@kitap.Kitap</td>
+                    <td>@book.Book</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a asp-action="KitapEdit" asp-controller="KitapEdit" asp-route-id="@kitap.Id" class="btn btn-primary mb-3">Kitap Düzenle</a>
-                            <a asp-action="KitapSil" asp-controller="KitapEdit" asp-route-id="@kitap.Id" class="btn btn-danger mb-3">Kitap Sil</a>
+                            <a asp-action="BookEdit" asp-controller="Book" asp-route-id="@book.BookId" class="btn btn-primary mb-3">Kitap Düzenle</a>
+                            <a asp-action="BookDelete" asp-controller="Book" asp-route-id="@book.BookId" class="btn btn-danger mb-3">Kitap Sil</a>
                         </div>
                     </td>
                 </tr>

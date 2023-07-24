@@ -1,0 +1,30 @@
+﻿@model RegistrationModel
+
+<h3>kitap Düzenle</h3>
+<hr />
+<form method="post" asp-action="RegisterEdit" asp-controller="Registration">
+    <div class="mb-3">
+        <label class="form-label">Id</label>
+        <input type="text" class="form-control" asp-for="RegId" readonly />
+    </div>
+    <div class="mb-3">
+        <label asp-for="NameSurname" class="form-label">Ad Soyad</label>
+        <input asp-for="NameSurname" class="form-control" placeholder="Ad Soyad" />
+        <span asp-validation-for="NameSurname" class="text-danger"></span>
+    </div>
+    <hr />
+    <div class="mb-3">
+        <label asp-for="BookName" class="form-label">Kitap Adı</label>
+        <input asp-for="BookName" class="form-control" placeholder="Kitap Adı" readonly />
+        <span asp-validation-for="BookName" class="text-danger"></span>
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Düzenle</button>
+    </div>
+</form>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

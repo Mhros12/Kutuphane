@@ -9,9 +9,8 @@ namespace kutuphane.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<KayitModel> Kayitlar { get; set; }
-        public DbSet<KitaplikModel> Kitapliklar { get; set; }
-
+        public DbSet<RegistrationModel> Registrations { get; set; }
+        public DbSet<BookModel> Books { get; set; }
     }
 }
 

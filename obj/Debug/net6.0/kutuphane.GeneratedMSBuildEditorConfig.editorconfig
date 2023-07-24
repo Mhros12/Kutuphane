@@ -16,36 +16,32 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\umut_\source\repos\kutuphane\kutuphane
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Book/AddBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xBZGRCb29rLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Home/KitapEkle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxLaXRhcEVrbGUuY3NodG1s
+[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Book/BookDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xCb29rRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Book/BookEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va1xCb29rRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/KayitEdit/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F5aXRFZGl0XEluZGV4LmNzaHRtbA==
+[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Registration/AddRegister.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0cmF0aW9uXEFkZFJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/KayitEdit/KayitEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F5aXRFZGl0XEtheWl0RWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/KayitEdit/KayitEkle.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2F5aXRFZGl0XEtheWl0RWtsZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/KitapEdit/KitapEdit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBFZGl0XEtpdGFwRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/KitapEdit/KitapSil.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2l0YXBFZGl0XEtpdGFwU2lsLmNzaHRtbA==
+[C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Registration/RegisterEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaXN0cmF0aW9uXFJlZ2lzdGVyRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/umut_/source/repos/kutuphane/kutuphane/Views/Shared/Error.cshtml]

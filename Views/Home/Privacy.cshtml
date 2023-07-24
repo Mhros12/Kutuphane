@@ -1,4 +1,4 @@
-﻿@model List<KayitModel>
+﻿@model List<RegistrationModel>
 @{
     ViewData["Title"] = "Privacy";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <div class="d-grid">
-        <a asp-action="Index" asp-controller="KayitEdit" class="btn btn-primary mb-3">Kayıt Ekle</a>
+        <a asp-action="AddRegister" asp-controller="Registration" class="btn btn-primary mb-3">Kayıt Ekle</a>
     </div>
     <table class="table table-bordered">
         <tr>
@@ -17,16 +17,16 @@
         </tr>
         @if (Model != null && Model.Any())
         {
-            @foreach (var kayit in Model)
+            @foreach (var Register in Model)
             {
                 <tr>
-                    <td>@kayit.Id</td>
-                    <td>@kayit.AdSoyad</td>
-                    <td>@kayit.KitapAdi</td>
+                    <td>@Register.RegId</td>
+                    <td>@Register.NameSurname</td>
+                    <td>@Register.BookName</td>
                     <td>
                         <div class ="btn-group btn-group-sm">
-                            <a asp-controller="KayitEdit" asp-action="KayitEdit" asp-route-id="@kayit.Id" class="btn btn-primary">Düzenle</a>
-                            <a asp-controller="kayit" asp-action="Delete" asp-route-id="@kayit.Id" class="btn btn-danger">iade</a>
+                            <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.RegId" class="btn btn-primary">Düzenle</a>
+                            <a asp-controller="Registration" asp-action="RegisterDelete" asp-route-id="@Register.RegId" class="btn btn-danger">iade</a>
                         </div>
                     </td>
                 </tr>

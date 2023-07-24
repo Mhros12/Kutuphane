@@ -22,36 +22,22 @@ namespace kutuphane.Controllers
         {
             _logger = logger;
         }
+
+        //Buralarda kullandığın ToList() ler çok tehlikelidir. Az kayıt olduğunda sıkıntı olmaz fakat veritabanında çok fazla kayıt olduğunda buralar timeout verir ortalığın canına okursun :) 
         public IActionResult Index()
         {
-            List<KitaplikModel> kayit = _context.Kitapliklar.ToList();
-            return View(kayit);
+            List<BookModel> Book = _context.Books.ToList();
+            return View(Book);
         }
         public IActionResult Privacy()
         {
-            List<KayitModel> kayit = _context.Kayitlar.ToList();
-            return View(kayit);
+            List<RegistrationModel> Reg = _context.Registrations.ToList();
+            return View(Reg);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public IActionResult KitapEkle()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> KitapEkle(KitaplikModel Kitap1)
-        {
-            if (ModelState.IsValid)
-            {
-                Kitap1.Durum = true;
-                _context.Add(Kitap1);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(Kitap1);
         }
     }
 }

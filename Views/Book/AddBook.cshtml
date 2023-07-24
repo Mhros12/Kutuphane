@@ -1,0 +1,15 @@
+﻿@model BookModel
+
+<h3>kitap ekle</h3>
+<hr />
+<form method="post" asp-action="AddBook" asp-controller="Book">
+    <div class="mb-3">
+        <label asp-for="Book" class="form-label">Kitap Adı</label>
+        <input asp-for="Book" class="form-control" placeholder="Kitap Adı" />
+        <span asp-validation-for="Book" class="text-danger"></span>
+    </div>
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Ekle</button>
+    </div>
+</form>
+

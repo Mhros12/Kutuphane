@@ -1,26 +1,26 @@
-﻿@model KitaplikModel
+﻿@model BookModel
 
 <h3>kitap Düzenle</h3>
 <hr />
-<form method="post" asp-action="KitapEdit" asp-controller="KitapEdit">
+<form method="post" asp-action="BookEdit" asp-controller="Book">
     <div class="mb-3">
         <label class="form-label">Id</label>
-        <input type="text" class="form-control" asp-for="Id" readonly />
+        <input type="text" class="form-control" asp-for="BookId" readonly />
     </div>
     <label>Durumu</label>
     <div class="form-check">
-        <input type="radio" asp-for="Durum" value="true" class="form-check-input" />
+        <input type="radio" asp-for="Status" value="true" class="form-check-input" />
         <label class="form-check-label">Mevcut</label>
     </div>
     <div class="form-check">
-        <input type="radio" asp-for="Durum" value="false" class="form-check-input" />
+        <input type="radio" asp-for="Status" value="false" class="form-check-input" />
         <label class="form-check-label">Dışarıda</label>
     </div>
     <hr />
     <div class="mb-3">
-        <label asp-for="Kitap" class="form-label">Kitap Adı</label>
-        <input asp-for="Kitap" class="form-control" placeholder="Kitap Adı" />
-        <span asp-validation-for="Kitap" class="text-danger"></span>
+        <label asp-for="Book" class="form-label">Kitap Adı</label>
+        <input asp-for="Book" class="form-control" placeholder="Kitap Adı" />
+        <span asp-validation-for="Book" class="text-danger"></span>
     </div>
 
     <div class="d-grid">
