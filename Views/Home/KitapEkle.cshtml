@@ -1,0 +1,15 @@
+﻿@model KitaplikModel
+
+<h3>kitap ekle</h3>
+<hr />
+<form method="post" asp-action="KitapEkle" asp-controller="Home">
+    <div class="mb-3">
+        <label asp-for="Kitap" class="form-label">Kitap Adı</label>
+        <input asp-for="Kitap" class="form-control" placeholder="Kitap Adı" />
+        <span asp-validation-for="Kitap" class="text-danger"></span>
+    </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Ekle</button>
+        </div>
+</form>
+

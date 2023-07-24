@@ -1,0 +1,46 @@
+﻿@model List<KayitModel>
+@{
+    ViewData["Title"] = "Privacy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <div class="d-grid">
+        <a asp-action="Index" asp-controller="KayitEdit" class="btn btn-primary mb-3">Kayıt Ekle</a>
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Ad Soyad</th>
+            <th>Kitap Adı</th>
+            <th>Düzenle/iade</th>
+        </tr>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var kayit in Model)
+            {
+                <tr>
+                    <td>@kayit.Id</td>
+                    <td>@kayit.AdSoyad</td>
+                    <td>@kayit.KitapAdi</td>
+                    <td>
+                        <div class ="btn-group btn-group-sm">
+                            <a asp-controller="KayitEdit" asp-action="KayitEdit" asp-route-id="@kayit.Id" class="btn btn-primary">Düzenle</a>
+                            <a asp-controller="kayit" asp-action="Delete" asp-route-id="@kayit.Id" class="btn btn-danger">iade</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">
+                    <div>
+                        Hiç bir kayıt bulunamadı.
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
