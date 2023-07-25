@@ -39,57 +39,49 @@ namespace kutuphane.Controllers
         public IActionResult BookEdit(Guid id)
         {
             var entityOnDb = _context.Books.SingleOrDefault(x=> x.BookId == id);
-            if (entityOnDb != null) return RedirectToAction("Index", "Home");
-            return View();
+            if (entityOnDb == null) return RedirectToAction("Index", "Home");
+            return View(entityOnDb);
         }
         [HttpPost]
         public IActionResult BookEdit(BookModel model)
         {
             if (ModelState.IsValid)
+            {
+                var bookToUpdate = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
+                if (bookToUpdate != null)
                 {
-                    var Book = new BookModel()
-                    {
-                        BookId = model.BookId,
-                        Status = model.Status,
-                        Book = model.Book,
-                    };
-                    _context.Books.Update(Book);
+                    bookToUpdate.Status = model.Status;
+                    bookToUpdate.Book = model.Book;
+
+                    _context.Books.Update(bookToUpdate);
                     _context.SaveChanges();
-                    return RedirectToAction("Index","Home");
                 }
-                else
-                {
-                    return View();
-                }
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
+
         [HttpGet]
         public IActionResult BookDelete(Guid id)
         {
             var entityOnDb = _context.Books.SingleOrDefault(x => x.BookId == id);
-            if (entityOnDb != null) return RedirectToAction("Index", "Home");
+            if (entityOnDb == null) return RedirectToAction("Index", "Home");
             return View(entityOnDb);
         }
         [HttpPost]
         public IActionResult BookDelete(BookModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var Book = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
-                if (Book != null)
+                var BookToDelete = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
+                if (BookToDelete != null)
                 {
-                    _context.Books.Remove(Book);
+                    _context.Books.Remove(BookToDelete);
                     _context.SaveChanges();
-                    return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            catch (Exception)
-            {
                 return RedirectToAction("Index", "Home");
             }
+            return View();
         }
     }
 }

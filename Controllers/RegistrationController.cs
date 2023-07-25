@@ -20,28 +20,33 @@ namespace kutuphane.Controllers
         {
             return View();
         }
-        public IActionResult DropDownList(BookModel Books)
-        {
-            var BookList = _context.Books.Where(k => k.Status == true).ToList();
-            ViewBag.BookBag = new SelectList(BookList, "Book", "Book");//Bunun üzerinde dur braz bu şekilde yapabilirsin daha sonra da
-            return View();
-        }
         [HttpGet]
         public IActionResult AddRegister()
         {
+            var bookList = _context.Books.Where(k => k.Status == true).ToList();
+            var selectList = bookList.Select(book => new SelectListItem
+            {
+                //Value = book.BookId.ToString(),
+                Text = book.Book,
+            }).ToList();
+
+            ViewBag.BookBag = selectList;
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddRegister(RegistrationModel Register)
         {
             if (ModelState.IsValid)
-            {
-                _context.Add(Register);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Privacy", "Home");
-            }      
-            return View(Register);
-        }
+        {
+            var selectedBook = _context.Books.FirstOrDefault(book => book.Book == Register.BookName);
+            selectedBook.Status = false;
+            _context.Registrations.Add(Register);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Privacy", "Home");
+        }      
+        return View(Register);
+    }
         [HttpGet]
         public IActionResult RegisterEdit(Guid id)
         {
@@ -52,17 +57,10 @@ namespace kutuphane.Controllers
             return View(entityOnDb);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult RegisterEdit(RegistrationModel model)
+        public IActionResult RegisterEdit(RegistrationModel Register)
         {
             if (ModelState.IsValid)
             {
-                var Register = new RegistrationModel()
-                {
-                    RegId = model.RegId,
-                    NameSurname = model.NameSurname,
-                    BookName = model.BookName,
-                };
                 _context.Registrations.Update(Register);
                 _context.SaveChanges();
                 return RedirectToAction("Privacy", "Home");
@@ -71,6 +69,32 @@ namespace kutuphane.Controllers
             {
                 return View();
             }
+        }
+        [HttpGet]
+        public IActionResult RegisterStatusUpdate(Guid id)
+        {
+            var entityOnDb = _context.Registrations.SingleOrDefault(x => x.RegId == id);
+
+            if (entityOnDb == null) return RedirectToAction("Privacy", "Home");
+
+            return View(entityOnDb);
+        }
+        [HttpPost]
+        public IActionResult RegisterStatusUpdate(RegistrationModel Register)
+        {
+            if (ModelState.IsValid)
+            {
+                var RegisterDelete = _context.Registrations.SingleOrDefault(x => x.RegId == Register.RegId);
+                if (RegisterDelete != null)
+                {
+                    var BookStatus = _context.Books.FirstOrDefault(book => book.Book == Register.BookName);
+                    BookStatus.Status = true;
+                    _context.Registrations.Remove(RegisterDelete);
+                    _context.SaveChanges();
+                }
+                return RedirectToAction("Privacy", "Home");
+            }
+            return View();
         }
     }
 }

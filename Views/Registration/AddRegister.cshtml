@@ -1,4 +1,4 @@
-﻿@model kutuphane.Models.RegistrationModel
+﻿@model RegistrationModel
 <h3>Kayıt ekle</h3>
 <hr />
 
@@ -9,10 +9,8 @@
         <span asp-validation-for="NameSurname" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <form asp-controller="Registration" asp-action="DropDownList" method="post">
-            <label asp-for="BookName">Kitabı seç:</label>
-            <select asp-for="BookName" asp-items="@ViewBag.kitapL" class="form-control"></select>
-            <input asp-for="BookName" type="submit" value="Submit" class="btn btn-primary" />
-        </form>
+        <label asp-for="BookName">Kitabı seç:</label>
+        <select asp-for="BookName" asp-items="@ViewBag.BookBag" class="form-control"></select>
     </div>
+    <button type="submit" class="btn btn-primary">Kayıt Ekle</button>
 </form>

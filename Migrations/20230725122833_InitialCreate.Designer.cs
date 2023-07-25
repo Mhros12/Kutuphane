@@ -12,7 +12,7 @@ using kutuphane.Data;
 namespace kutuphane.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230724152544_InitialCreate")]
+    [Migration("20230725122833_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

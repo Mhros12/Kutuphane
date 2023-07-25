@@ -9,9 +9,9 @@ namespace kutuphane.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController>? _logger;
 
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext? _context;
 
         [ActivatorUtilitiesConstructor]
         public HomeController (ApplicationDbContext context)
@@ -22,15 +22,21 @@ namespace kutuphane.Controllers
         {
             _logger = logger;
         }
-
-        //Buralarda kullandığın ToList() ler çok tehlikelidir. Az kayıt olduğunda sıkıntı olmaz fakat veritabanında çok fazla kayıt olduğunda buralar timeout verir ortalığın canına okursun :) 
         public IActionResult Index()
         {
+            if (_context == null)
+            {
+                return View("Error");
+            }
             List<BookModel> Book = _context.Books.ToList();
             return View(Book);
         }
         public IActionResult Privacy()
         {
+            if (_context == null)
+            {
+                return View("Error");
+            }
             List<RegistrationModel> Reg = _context.Registrations.ToList();
             return View(Reg);
         }
