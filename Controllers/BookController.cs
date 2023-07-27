@@ -1,7 +1,9 @@
 ﻿using kutuphane.Data;
 using kutuphane.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 
 namespace kutuphane.Controllers
 {
@@ -76,10 +78,18 @@ namespace kutuphane.Controllers
                 var BookToDelete = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
                 if (BookToDelete != null)
                 {
-                    _context.Books.Remove(BookToDelete);
-                    _context.SaveChanges();
+                    if (BookToDelete.Status != false)
+                    {
+                        _context.Books.Remove(BookToDelete);
+                        _context.SaveChanges();
+                        TempData["SuccessMessage"] = "Kitap Silindi!";
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Kitap Dışarıdayken Silinemez!";
+                    }
                 }
-                return RedirectToAction("Index", "Home");
             }
             return View();
         }
