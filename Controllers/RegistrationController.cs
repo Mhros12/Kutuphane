@@ -18,7 +18,12 @@ namespace kutuphane.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (_context == null)
+            {
+                return View("Error");
+            }
+            List<RegistrationModel> Reg = _context.Registrations.ToList();
+            return View(Reg);
         }
         [HttpGet]
         public IActionResult AddRegister()
@@ -43,7 +48,7 @@ namespace kutuphane.Controllers
             selectedBook.Status = false;
             _context.Registrations.Add(Register);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Privacy", "Home");
+            return RedirectToAction("Index", "Registration");
         }      
         return View(Register);
     }
@@ -52,7 +57,7 @@ namespace kutuphane.Controllers
         {
             var entityOnDb = _context.Registrations.SingleOrDefault(x => x.RegId == id);
 
-            if (entityOnDb == null) return RedirectToAction("Privacy", "Home");
+            if (entityOnDb == null) return RedirectToAction("Index", "Registration");
 
             return View(entityOnDb);
         }
@@ -63,7 +68,7 @@ namespace kutuphane.Controllers
             {
                 _context.Registrations.Update(Register);
                 _context.SaveChanges();
-                return RedirectToAction("Privacy", "Home");
+                return RedirectToAction("Index", "Registration");
             }
             else
             {
@@ -75,7 +80,7 @@ namespace kutuphane.Controllers
         {
             var entityOnDb = _context.Registrations.SingleOrDefault(x => x.RegId == id);
 
-            if (entityOnDb == null) return RedirectToAction("Privacy", "Home");
+            if (entityOnDb == null) return RedirectToAction("Index", "Registration");
 
             return View(entityOnDb);
         }
@@ -92,7 +97,7 @@ namespace kutuphane.Controllers
                     _context.Registrations.Remove(RegisterDelete);
                     _context.SaveChanges();
                 }
-                return RedirectToAction("Privacy", "Home");
+                return RedirectToAction("Index", "Registration");
             }
             return View();
         }

@@ -9,11 +9,11 @@
     </div>
     <label>Durumu</label>
     <div class="form-check">
-        <input type="radio" asp-for="Status" value="true" class="form-check-input" />
+        <input type="radio" asp-for="Status" value="true" class="form-check-input" disabled />
         <label class="form-check-label">Mevcut</label>
     </div>
     <div class="form-check">
-        <input type="radio" asp-for="Status" value="false" class="form-check-input" />
+        <input type="radio" asp-for="Status" value="false" class="form-check-input" disabled />
         <label class="form-check-label">Dışarıda</label>
     </div>
     <hr />
@@ -27,6 +27,12 @@
         <button type="submit" class="btn btn-primary">Düzenle</button>
     </div>
 </form>
+@if (TempData["BookEditError"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["BookEditError"]
+    </div>
+}
 @section Scripts{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

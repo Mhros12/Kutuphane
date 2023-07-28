@@ -23,17 +23,28 @@ namespace kutuphane.Controllers
         [HttpGet]
         public IActionResult AddBook()
         {
-            return View();
+            return View();  
         }
         [HttpPost]
         public async Task<IActionResult> AddBook(BookModel Books)
         {
             if (ModelState.IsValid)
             {
-                Books.Status = true;
-                _context.Add(Books);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index","Home");
+                var bookTitleLowercase = Books.Book.ToLower();
+                var BookFilter = _context.Books.Any(x => x.Book.ToLower() == bookTitleLowercase);
+                if (!BookFilter)
+                {
+                    Books.Status = true;
+                    _context.Add(Books);
+                    await _context.SaveChangesAsync();
+                    TempData["BookAdded"] = "Kitap Eklendi!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["ErrorMessageSameBook"] = "Aynı Kitap Eklenemez!";
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View(Books);
         }
@@ -52,17 +63,21 @@ namespace kutuphane.Controllers
                 var bookToUpdate = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
                 if (bookToUpdate != null)
                 {
-                    bookToUpdate.Status = model.Status;
-                    bookToUpdate.Book = model.Book;
-
-                    _context.Books.Update(bookToUpdate);
-                    _context.SaveChanges();
+                    if (bookToUpdate.Status != false)
+                    {
+                        bookToUpdate.Book = model.Book;
+                        _context.Books.Update(bookToUpdate);
+                        _context.SaveChanges();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        TempData["BookEditError"]= "Kitap Dışarıdayken Güncellenemez!";
+                    }
                 }
-                return RedirectToAction("Index", "Home");
             }
             return View();
         }
-
         [HttpGet]
         public IActionResult BookDelete(Guid id)
         {
@@ -82,12 +97,12 @@ namespace kutuphane.Controllers
                     {
                         _context.Books.Remove(BookToDelete);
                         _context.SaveChanges();
-                        TempData["SuccessMessage"] = "Kitap Silindi!";
+                        TempData["ErrorMessage"] = "Kitap Silindi!";
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "Kitap Dışarıdayken Silinemez!";
+                        TempData["ErrorMessage"] = "Dışarıda Olan Kitap Silinemez!";
                     }
                 }
             }

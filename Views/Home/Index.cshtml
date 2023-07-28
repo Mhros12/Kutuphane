@@ -53,6 +53,18 @@
             @TempData["SuccessMessage"]
         </div>
     }
+    @if (TempData["ErrorMessageSameBook"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessageSameBook"]
+       </div>
+    }
+    @if (TempData["BookAdded"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["BookAdded"]
+        </div>
+    }
 </div>
 
 

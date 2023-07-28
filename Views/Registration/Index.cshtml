@@ -1,6 +1,6 @@
-﻿@*@model List<RegistrationModel>
+﻿@model List<RegistrationModel>
 @{
-    ViewData["Title"] = "Privacy";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -24,7 +24,7 @@
                     <td>@Register.NameSurname</td>
                     <td>@Register.BookName</td>
                     <td>
-                        <div class ="btn-group btn-group-sm">
+                        <div class="btn-group btn-group-sm">
                             <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.RegId" class="btn btn-primary">Düzenle</a>
                             <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.RegId" class="btn btn-danger">iade</a>
                         </div>
@@ -43,4 +43,4 @@
             </tr>
         }
     </table>
-</div>*@
+</div>

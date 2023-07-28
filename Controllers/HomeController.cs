@@ -33,12 +33,7 @@ namespace kutuphane.Controllers
         }
         public IActionResult Privacy()
         {
-            if (_context == null)
-            {
-                return View("Error");
-            }
-            List<RegistrationModel> Reg = _context.Registrations.ToList();
-            return View(Reg);
+            return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
