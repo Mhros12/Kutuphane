@@ -18,7 +18,12 @@ namespace kutuphane.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (_context == null)
+            {
+                return View("Error");
+            }
+            List<Book> Book = _context.Books.ToList();
+            return View(Book);
         }
         [HttpGet]
         public IActionResult AddBook()
@@ -26,24 +31,26 @@ namespace kutuphane.Controllers
             return View();  
         }
         [HttpPost]
-        public async Task<IActionResult> AddBook(BookModel Books)
+        public async Task<IActionResult> AddBook(Book Books)
         {
             if (ModelState.IsValid)
             {
-                var bookTitleLowercase = Books.Book.ToLower();
-                var BookFilter = _context.Books.Any(x => x.Book.ToLower() == bookTitleLowercase);
+                var bookTitleLowercase = Books.Name.ToLower();
+                var BookFilter = _context.Books.Any(x => x.Name.ToLower() == bookTitleLowercase);
                 if (!BookFilter)
                 {
-                    Books.Status = true;
+                    Books.CreatedOn = DateTime.Now;
+                    Books.ModifiedOn = null;
+                    Books.IsInLibrary = 1;
                     _context.Add(Books);
                     await _context.SaveChangesAsync();
                     TempData["BookAdded"] = "Kitap Eklendi!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Book");
                 }
                 else
                 {
                     TempData["ErrorMessageSameBook"] = "Aynı Kitap Eklenemez!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Book");
                 }
             }
             return View(Books);
@@ -51,29 +58,29 @@ namespace kutuphane.Controllers
         [HttpGet]
         public IActionResult BookEdit(Guid id)
         {
-            var entityOnDb = _context.Books.SingleOrDefault(x=> x.BookId == id);
-            if (entityOnDb == null) return RedirectToAction("Index", "Home");
+            var entityOnDb = _context.Books.SingleOrDefault(x=> x.Id == id);
+            if (entityOnDb == null) return RedirectToAction("Index", "Book");
             return View(entityOnDb);
         }
         [HttpPost]
-        public IActionResult BookEdit(BookModel model)
+        public IActionResult BookEdit(Book model)
         {
             if (ModelState.IsValid)
             {
-                var bookToUpdate = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
+                var bookToUpdate = _context.Books.SingleOrDefault(x => x.Id == model.Id);
                 if (bookToUpdate != null)
                 {
-                    if (bookToUpdate.Status != false)
+                    if (bookToUpdate.IsInLibrary == 1)
                     {
-                        bookToUpdate.Book = model.Book;
+                        bookToUpdate.Name = model.Name;
+                        bookToUpdate.Writer = model.Writer;
+                        bookToUpdate.ModifiedOn = DateTime.Now;
                         _context.Books.Update(bookToUpdate);
                         _context.SaveChanges();
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Book");
                     }
-                    else
-                    {
-                        TempData["BookEditError"]= "Kitap Dışarıdayken Güncellenemez!";
-                    }
+                    else if (bookToUpdate.IsInLibrary == 2)TempData["BookEditError"] = "Kitap Dışarıdayken Güncellenemez!";
+                    else if(bookToUpdate.IsInLibrary== -1)TempData["BookEditError2"] = "Kitap Bakımdayken Güncellenemez!";
                 }
             }
             return View();
@@ -81,28 +88,28 @@ namespace kutuphane.Controllers
         [HttpGet]
         public IActionResult BookDelete(Guid id)
         {
-            var entityOnDb = _context.Books.SingleOrDefault(x => x.BookId == id);
-            if (entityOnDb == null) return RedirectToAction("Index", "Home");
+            var entityOnDb = _context.Books.SingleOrDefault(x => x.Id == id);
+            if (entityOnDb == null) return RedirectToAction("Index", "Book");
             return View(entityOnDb);
         }
         [HttpPost]
-        public IActionResult BookDelete(BookModel model)
+        public IActionResult BookDelete(Book model)
         {
             if (ModelState.IsValid)
             {
-                var BookToDelete = _context.Books.SingleOrDefault(x => x.BookId == model.BookId);
+                var BookToDelete = _context.Books.SingleOrDefault(x => x.Id == model.Id);
                 if (BookToDelete != null)
                 {
-                    if (BookToDelete.Status != false)
+                    if (BookToDelete.IsInLibrary == 1)
                     {
                         _context.Books.Remove(BookToDelete);
                         _context.SaveChanges();
                         TempData["ErrorMessage"] = "Kitap Silindi!";
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Book");
                     }
                     else
                     {
-                        TempData["ErrorMessage"] = "Dışarıda Olan Kitap Silinemez!";
+                        TempData["ErrorMessage"] = "Dışarıda veya Bakımda Olan Kitap Silinemez!";
                     }
                 }
             }

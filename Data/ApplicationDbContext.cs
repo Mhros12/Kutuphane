@@ -9,8 +9,8 @@ namespace kutuphane.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<RegistrationModel> Registrations { get; set; }
-        public DbSet<BookModel> Books { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
+        public DbSet<Book> Books { get; set; }
     }
 }
 

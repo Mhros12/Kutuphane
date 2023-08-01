@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace kutuphane.Controllers
 {
@@ -24,12 +25,7 @@ namespace kutuphane.Controllers
         }
         public IActionResult Index()
         {
-            if (_context == null)
-            {
-                return View("Error");
-            }
-            List<BookModel> Book = _context.Books.ToList();
-            return View(Book);
+            return View();
         }
         public IActionResult Privacy()
         {

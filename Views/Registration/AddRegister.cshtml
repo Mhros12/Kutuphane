@@ -1,16 +1,17 @@
-﻿@model RegistrationModel
+﻿@model Registration
 <h3>Kayıt ekle</h3>
 <hr />
 
 <form method="post" asp-action="AddRegister" asp-controller="Registration">
     <div class="mb-3">
-        <label asp-for="NameSurname" class="form-label">Ad Soyad</label>
-        <input asp-for="NameSurname" class="form-control" placeholder="Ad Soyad" />
-        <span asp-validation-for="NameSurname" class="text-danger"></span>
+        <label asp-for="FullName" class="form-label">Ad Soyad</label>
+        <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="BookName">Kitabı seç:</label>
-        <select asp-for="BookName" asp-items="@ViewBag.BookBag" class="form-control"></select>
+        <label asp-for="BookId">Kitabı seç:</label>
+        <select asp-for="BookId" asp-items="@ViewBag.BookBag" class="form-control"></select>
+        <span asp-validation-for="BookId" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Kayıt Ekle</button>
 </form>

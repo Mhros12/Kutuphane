@@ -1,25 +1,40 @@
-﻿@model BookModel
+﻿@model Book
 
 <h3>Kitabı Sil</h3>
 <hr />
 <form method="post" asp-action="BookDelete" asp-controller="Book">
     <div class="mb-3">
         <label class="form-label">Id</label>
-        <input type="text" class="form-control" asp-for="BookId" readonly />
+        <input type="text" class="form-control" asp-for="Id" readonly />
     </div>
     <label>Durumu</label>
     <div class="form-check">
-        <input type="radio" asp-for="Status" value="true" class="form-check-input" readonly />
+        <input type="radio" asp-for="IsInLibrary" value="true" class="form-check-input" disabled />
         <label class="form-check-label">Mevcut</label>
     </div>
     <div class="form-check">
-        <input type="radio" asp-for="Status" value="false" class="form-check-input" readonly />
+        <input type="radio" asp-for="IsInLibrary" value="false" class="form-check-input" disabled />
         <label class="form-check-label">Dışarıda</label>
     </div>
     <hr />
     <div class="mb-3">
-        <label asp-for="Book" class="form-label">Kitap Adı</label>
-        <input asp-for="Book" class="form-control" placeholder="Kitap Adı" readonly />
+        <label asp-for="Name" class="form-label">Kitap Adı</label>
+        <input asp-for="Name" class="form-control" placeholder="Kitap Adı" readonly />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Writer" class="form-label">Yazar Adı</label>
+        <input asp-for="Writer" class="form-control" placeholder="Yazar Adı" readonly />
+    </div>
+    <div class="mb-3">
+        <label asp-for="CreatedOn" class="form-label">Eklenme Tarihi</label>
+        <input asp-for="CreatedOn" class="form-control" type="date" readonly />
+        <span asp-validation-for="CreatedOn" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ModifiedOn" class="form-label">Düzenlenme Tarihi</label>
+        <input asp-for="ModifiedOn" class="form-control" type="date" readonly />
+        <span asp-validation-for="ModifiedOn" class="text-danger"></span>
     </div>
 
     <div class="d-grid">

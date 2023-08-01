@@ -1,0 +1,90 @@
+﻿@model List<Book>
+@{
+    ViewData["Title"] = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <div class="d-grid">
+        <a asp-action="AddBook" asp-controller="Book" class="btn btn-primary mb-3">Kitap Ekle</a>
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Durum</th>
+            <th>Kitap Adı</th>
+            <th>Yazar Adı</th>
+            <th>Eklenme Tarihi</th>
+            <th>Düzenlenme Tarihi</th>
+            <th>Düzenle/sil</th>
+        </tr>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    @if (book.IsInLibrary == 1)
+                    {
+                        <td>Mevcut</td>
+                    }
+                    else if (book.IsInLibrary == 2)
+                    {
+                        <td>Dışarıda</td>
+                    }
+                    else if (book.IsInLibrary == -1)
+                    {
+                        <td>Bakımda</td>
+                    }
+                    <td>@book.Name</td>
+                    <td>@book.Writer</td>
+                    <td>@book.CreatedOn</td>
+                    @if (book.ModifiedOn != null)
+                    {
+                        <td>@book.ModifiedOn</td>                   
+                    }
+                    else
+                    {
+                        <td>Düzenlenmedi</td>
+                    }
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a asp-action="BookEdit" asp-controller="Book" asp-route-id="@book.Id" class="btn btn-primary mb-3">Kitap Düzenle</a>
+                            <a asp-action="BookDelete" asp-controller="Book" asp-route-id="@book.Id" class="btn btn-danger mb-3">Kitap Sil</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">
+                    <div>
+                        Hiç bir kayıt bulunamadı.
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessageSameBook"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessageSameBook"]
+        </div>
+    }
+    @if (TempData["BookAdded"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["BookAdded"]
+        </div>
+    }
+</div>
+
+

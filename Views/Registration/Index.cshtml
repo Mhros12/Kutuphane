@@ -1,4 +1,4 @@
-﻿@model List<RegistrationModel>
+﻿@model List<Registration>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,26 +12,81 @@
         <tr>
             <th>ID</th>
             <th>Ad Soyad</th>
-            <th>Kitap Adı</th>
+            <th>Kitap Id</th>
+            <th>İade Tarihi</th>
+            <th>Eklenme Tarihi</th>
+            <th>Düzenlenme Tarihi</th>
             <th>Düzenle/iade</th>
         </tr>
         @if (Model != null && Model.Any())
         {
             @foreach (var Register in Model)
             {
-                <tr>
-                    <td>@Register.RegId</td>
-                    <td>@Register.NameSurname</td>
-                    <td>@Register.BookName</td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.RegId" class="btn btn-primary">Düzenle</a>
-                            <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.RegId" class="btn btn-danger">iade</a>
-                        </div>
-                    </td>
-                </tr>
+                @if (Register.ReturnedOn != null)
+                {
+                    <tr class="opacity-50">
+                        <td>@Register.Id</td>
+                        <td>@Register.FullName</td>
+                        <td>@Register.BookId</td>
+                        @if (Register.ReturnedOn != null)
+                        {
+                            <td>@Register.ReturnedOn</td>
+                        }
+                        else
+                        {
+                            <td>İade Edilmedi</td>
+                        }
+                        <td>@Register.CreatedOn</td>
+                        @if (Register.ModifiedOn != null)
+                        {
+                            <td>@Register.ModifiedOn</td>
+                        }
+                        else
+                        {
+                            <td>Düzenlenmedi</td>
+                        }
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.Id" class="btn btn-primary">Düzenle</a>
+                                <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.Id" class="btn btn-danger">iade</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="IsInLibrary">
+                        <td>@Register.Id</td>
+                        <td>@Register.FullName</td>
+                        <td>@Register.BookId</td>
+                        @if (Register.ReturnedOn != null)
+                        {
+                            <td>@Register.ReturnedOn</td>
+                        }
+                        else
+                        {
+                            <td>İade Edilmedi</td>
+                        }
+                        <td>@Register.CreatedOn</td>
+                        @if (Register.ModifiedOn != null)
+                        {
+                            <td>@Register.ModifiedOn</td>
+                        }
+                        else
+                        {
+                            <td>Düzenlenmedi</td>
+                        }
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.Id" class="btn btn-primary">Düzenle</a>
+                                <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.Id" class="btn btn-danger">iade</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
             }
         }
+
         else
         {
             <tr>
