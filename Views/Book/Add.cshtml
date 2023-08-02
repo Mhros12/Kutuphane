@@ -1,8 +1,8 @@
-﻿@model Book
+﻿@model kutuphane.Models.Book
 
 <h3>kitap ekle</h3>
 <hr />
-<form method="post" asp-action="AddBook" asp-controller="Book">
+<form method="post" asp-action="Add" asp-controller="Book">
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Kitap Adı</label>
         <input asp-for="Name" class="form-control" placeholder="Kitap Adı" />

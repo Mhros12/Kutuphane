@@ -1,11 +1,14 @@
 using kutuphane;
 using kutuphane.Data;
+using kutuphane.Interfaces;
+using kutuphane.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

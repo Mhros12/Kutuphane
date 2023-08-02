@@ -1,4 +1,4 @@
-﻿@model List<Book>
+﻿@model IEnumerable<kutuphane.Models.Book>
 @{
     ViewData["Title"] = "index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,9 +6,9 @@
 
 <div class="text-center">
     <div class="d-grid">
-        <a asp-action="AddBook" asp-controller="Book" class="btn btn-primary mb-3">Kitap Ekle</a>
+        <a asp-action="Add" asp-controller="Book" class="btn btn-primary mb-3">Kitap Ekle</a>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <tr>
             <th>ID</th>
             <th>Durum</th>
@@ -49,8 +49,8 @@
                     }
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a asp-action="BookEdit" asp-controller="Book" asp-route-id="@book.Id" class="btn btn-primary mb-3">Kitap Düzenle</a>
-                            <a asp-action="BookDelete" asp-controller="Book" asp-route-id="@book.Id" class="btn btn-danger mb-3">Kitap Sil</a>
+                            <a asp-action="Update" asp-controller="Book" asp-route-id="@book.Id" class="btn btn-primary mb-3">Kitap Düzenle</a>
+                            <a asp-action="Delete" asp-controller="Book" asp-route-id="@book.Id" class="btn btn-danger mb-3">Kitap Sil</a>
                         </div>
                     </td>
                 </tr>

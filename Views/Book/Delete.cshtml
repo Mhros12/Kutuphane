@@ -1,8 +1,8 @@
-﻿@model Book
+﻿@model kutuphane.Models.Book
 
 <h3>Kitabı Sil</h3>
 <hr />
-<form method="post" asp-action="BookDelete" asp-controller="Book">
+<form method="post" asp-action="Delete" asp-controller="Book">
     <div class="mb-3">
         <label class="form-label">Id</label>
         <input type="text" class="form-control" asp-for="Id" readonly />

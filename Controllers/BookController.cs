@@ -1,5 +1,7 @@
 ﻿using kutuphane.Data;
+using kutuphane.Interfaces;
 using kutuphane.Models;
+using kutuphane.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -9,41 +11,39 @@ namespace kutuphane.Controllers
 {
     public class BookController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IBookService _bookService;
 
         [ActivatorUtilitiesConstructor]
-        public BookController(ApplicationDbContext context)
+        public BookController(IBookService bookService)
         {
-            _context = context;
+            _bookService = bookService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if (_context == null)
+            if (_bookService == null)
             {
                 return View("Error");
             }
-            List<Book> Book = _context.Books.ToList();
-            return View(Book);
+            IEnumerable<Book> books = await _bookService.GetAll();
+            return View(books);
         }
         [HttpGet]
-        public IActionResult AddBook()
+        public IActionResult Add()
         {
             return View();  
         }
         [HttpPost]
-        public async Task<IActionResult> AddBook(Book Books)
+        public IActionResult Add(Book books)
         {
             if (ModelState.IsValid)
             {
-                var bookTitleLowercase = Books.Name.ToLower();
-                var BookFilter = _context.Books.Any(x => x.Name.ToLower() == bookTitleLowercase);
+                var BookFilter = _bookService.CheckName(books.Name);
                 if (!BookFilter)
                 {
-                    Books.CreatedOn = DateTime.Now;
-                    Books.ModifiedOn = null;
-                    Books.IsInLibrary = 1;
-                    _context.Add(Books);
-                    await _context.SaveChangesAsync();
+                    books.CreatedOn = DateTime.Now;
+                    books.ModifiedOn = null;
+                    books.IsInLibrary = 1;
+                    _bookService.Add(books);
                     TempData["BookAdded"] = "Kitap Eklendi!";
                     return RedirectToAction("Index", "Book");
                 }
@@ -53,21 +53,21 @@ namespace kutuphane.Controllers
                     return RedirectToAction("Index", "Book");
                 }
             }
-            return View(Books);
+            return View(books);
         }
         [HttpGet]
-        public IActionResult BookEdit(Guid id)
+        public async Task<IActionResult> Update(Guid id)
         {
-            var entityOnDb = _context.Books.SingleOrDefault(x=> x.Id == id);
+            var entityOnDb = await _bookService.GetById(id);
             if (entityOnDb == null) return RedirectToAction("Index", "Book");
             return View(entityOnDb);
         }
         [HttpPost]
-        public IActionResult BookEdit(Book model)
+        public async Task<IActionResult> Update(Book model)
         {
             if (ModelState.IsValid)
             {
-                var bookToUpdate = _context.Books.SingleOrDefault(x => x.Id == model.Id);
+                var bookToUpdate = await _bookService.GetById(model.Id);
                 if (bookToUpdate != null)
                 {
                     if (bookToUpdate.IsInLibrary == 1)
@@ -75,8 +75,7 @@ namespace kutuphane.Controllers
                         bookToUpdate.Name = model.Name;
                         bookToUpdate.Writer = model.Writer;
                         bookToUpdate.ModifiedOn = DateTime.Now;
-                        _context.Books.Update(bookToUpdate);
-                        _context.SaveChanges();
+                        _bookService.Update(bookToUpdate);
                         return RedirectToAction("Index", "Book");
                     }
                     else if (bookToUpdate.IsInLibrary == 2)TempData["BookEditError"] = "Kitap Dışarıdayken Güncellenemez!";
@@ -86,24 +85,23 @@ namespace kutuphane.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult BookDelete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var entityOnDb = _context.Books.SingleOrDefault(x => x.Id == id);
+            var entityOnDb = await _bookService.GetById(id);
             if (entityOnDb == null) return RedirectToAction("Index", "Book");
             return View(entityOnDb);
         }
         [HttpPost]
-        public IActionResult BookDelete(Book model)
+        public async Task<IActionResult> Delete(Book model)
         {
             if (ModelState.IsValid)
             {
-                var BookToDelete = _context.Books.SingleOrDefault(x => x.Id == model.Id);
+                var BookToDelete = await _bookService.GetById(model.Id);
                 if (BookToDelete != null)
                 {
                     if (BookToDelete.IsInLibrary == 1)
                     {
-                        _context.Books.Remove(BookToDelete);
-                        _context.SaveChanges();
+                        _bookService.Delete(BookToDelete);                       
                         TempData["ErrorMessage"] = "Kitap Silindi!";
                         return RedirectToAction("Index", "Book");
                     }

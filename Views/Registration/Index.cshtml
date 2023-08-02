@@ -8,6 +8,15 @@
     <div class="d-grid">
         <a asp-action="AddRegister" asp-controller="Registration" class="btn btn-primary mb-3">Kayıt Ekle</a>
     </div>
+    <style>
+        .returned {
+            opacity: 50%;
+        }
+
+        .not-returned {
+            opacity: 100%;
+        }
+    </style>
     <table class="table table-bordered">
         <tr>
             <th>ID</th>
@@ -22,9 +31,7 @@
         {
             @foreach (var Register in Model)
             {
-                @if (Register.ReturnedOn != null)
-                {
-                    <tr class="opacity-50">
+                <tr class="@((Register.ReturnedOn != null) ? "returned" : "not-returned")">
                         <td>@Register.Id</td>
                         <td>@Register.FullName</td>
                         <td>@Register.BookId</td>
@@ -51,39 +58,7 @@
                                 <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.Id" class="btn btn-danger">iade</a>
                             </div>
                         </td>
-                    </tr>
-                }
-                else
-                {
-                    <tr class="IsInLibrary">
-                        <td>@Register.Id</td>
-                        <td>@Register.FullName</td>
-                        <td>@Register.BookId</td>
-                        @if (Register.ReturnedOn != null)
-                        {
-                            <td>@Register.ReturnedOn</td>
-                        }
-                        else
-                        {
-                            <td>İade Edilmedi</td>
-                        }
-                        <td>@Register.CreatedOn</td>
-                        @if (Register.ModifiedOn != null)
-                        {
-                            <td>@Register.ModifiedOn</td>
-                        }
-                        else
-                        {
-                            <td>Düzenlenmedi</td>
-                        }
-                        <td>
-                            <div class="btn-group btn-group-sm">
-                                <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.Id" class="btn btn-primary">Düzenle</a>
-                                <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.Id" class="btn btn-danger">iade</a>
-                            </div>
-                        </td>
-                    </tr>
-                }
+                </tr>
             }
         }
 
