@@ -1,8 +1,8 @@
 ﻿@model Registration
 
-<h3>Kitap iade</h3>
+<h3>Kayıt Düzenle</h3>
 <hr />
-<form method="post" asp-action="RegisterStatusUpdate" asp-controller="Registration">
+<form method="post" asp-action="Update" asp-controller="Registration">
     <div class="mb-3">
         <label class="form-label">Id</label>
         <input type="text" class="form-control" asp-for="Id" readonly />
@@ -10,7 +10,7 @@
 
     <div class="mb-3">
         <label asp-for="FullName" class="form-label">Ad Soyad</label>
-        <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" readonly />
+        <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" />
         <span asp-validation-for="FullName" class="text-danger"></span>
     </div>
 
@@ -38,7 +38,7 @@
     </div>
 
     <div class="d-grid">
-        <button type="submit" class="btn btn-danger">iade</button>
+        <button type="submit" class="btn btn-primary">Düzenle</button>
     </div>
 </form>
 @section Scripts{

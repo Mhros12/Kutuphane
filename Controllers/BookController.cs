@@ -113,5 +113,40 @@ namespace kutuphane.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Maintenance(Guid id)
+        {
+            var entityOnDb = await _bookService.GetById(id);
+            if (entityOnDb == null) return RedirectToAction("Index", "Book");
+            return View(entityOnDb);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Maintenance(Book status) 
+        {
+            if (ModelState.IsValid)
+            {
+                var bookStatusUpdate = await _bookService.GetById(status.Id);
+                if (bookStatusUpdate != null)
+                {
+                    if (bookStatusUpdate.IsInLibrary == 1)
+                    {
+                        bookStatusUpdate.IsInLibrary = -1;
+                        _bookService.Update(bookStatusUpdate);
+                        return RedirectToAction("Index", "Book");
+                    }
+                    else if (bookStatusUpdate.IsInLibrary == -1)
+                    {
+                        bookStatusUpdate.IsInLibrary = 1;
+                        _bookService.Update(bookStatusUpdate);
+                        return RedirectToAction("Index", "Book");
+                    }
+                    else
+                    {
+                        TempData["BookMaintenanceError"] = "Kitap Dışarıdayken Bakıma Alınamaz!";
+                    }
+                }
+            }
+            return View();
+        }
     }
 }

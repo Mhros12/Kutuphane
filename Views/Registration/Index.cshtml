@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <div class="d-grid">
-        <a asp-action="AddRegister" asp-controller="Registration" class="btn btn-primary mb-3">Kayıt Ekle</a>
+        <a asp-action="Add" asp-controller="Registration" class="btn btn-primary mb-3">Kayıt Ekle</a>
     </div>
     <style>
         .returned {
@@ -54,8 +54,8 @@
                         }
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a asp-controller="Registration" asp-action="RegisterEdit" asp-route-id="@Register.Id" class="btn btn-primary">Düzenle</a>
-                                <a asp-controller="Registration" asp-action="RegisterStatusUpdate" asp-route-id="@Register.Id" class="btn btn-danger">iade</a>
+                                <a asp-controller="Registration" asp-action="Update" asp-route-id="@Register.Id" class="btn btn-primary">Düzenle</a>
+                                <a asp-controller="Registration" asp-action="StatusUpdate" asp-route-id="@Register.Id" class="btn btn-danger">iade</a>
                             </div>
                         </td>
                 </tr>
